@@ -1,85 +1,23 @@
-import React, { Component } from 'react';
-import { auth, db } from '../../firebase/config';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet
-} from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import Home from '../../screens/Home/Home';
+import Profile from '../../screens/Profile/Profile'
+import NewPost from '../../screens/NewPost/NewPost'
 
-class HomeMenu extends Component {
-    constructor() {
-        super()
-        this.state = {
-            email: '',
-            password: '',
-            userName: '',
-            miniBio: '',
-            profilePhoto: '',
-            errors: {
-                email: '',
-                password: '',
-                userName: ''
-            }
-        }
-    }
+const Tab = createBottomTabNavigator()
 
-    componentDidMount() {
-       
-    }
+function HomeMenu() {
 
-    registerUser(email, password, userName, miniBio, profilePhoto) {
-        if (email === '') {
-            this.setState({ errors: { email: 'el campo email esta vacio' } })
-        } else if (password === '') {
-            this.setState({ errors: { password: 'el campo password esta vacio' } })
-        } else if (userName === '') {
-            this.setState({ errors: { userName: 'el campo userName esta vacio' } })
-        } else {
+    return (
+        <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Profile" component={Profile} />
+            <Tab.Screen name="NewPost" component={NewPost} />
+        </Tab.Navigator>
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(res => {
-
-                    db.collection('users').add({
-                        email: email,
-                        userName: userName,
-                        miniBio: miniBio,
-                        profilePhoto: profilePhoto,
-                        createdAt: Date.now()
-                    })
-                        .then(() => {
-                            this.setState({
-                                email: '',
-                                password: '',
-                                userName: '',
-                                miniBio: '',
-                                profilePhoto: '',
-                                errors: {}
-                            })
-
-                            this.props.navigation.navigate('HomeMenu')
-                        })
-
-                })
-                .catch(error => { console.log(error)
-                    if (error === errors.email) {
-                        console.log(errors.email)
-                    }
-                })
-        }
-    }
-
-
-    render() {
-        return (
-           
-                <Text>Registro</Text>
-                
-        )
-    }
+    )
 
 }
 
 
-export default HomeMenu;
+
+export default HomeMenu
