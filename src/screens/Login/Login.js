@@ -1,85 +1,74 @@
 import React, { Component } from 'react';
-import { auth, db } from '../../firebase/config';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet
-} from 'react-native';
+import {auth} from '../../firebase/config';
+import { View,
+         Text,
+         TextInput,
+         TouchableOpacity,
+        StyleSheet } from 'react-native';
 
 class Login extends Component {
-    constructor() {
+    constructor(){
         super()
         this.state = {
-            email: '',
-            password: '',
-            userName: '',
-            miniBio: '',
-            profilePhoto: '',
-            errors: {
-                email: '',
-                password: '',
-                userName: ''
-            }
+            email:'',
+            password:'',
+            errors:''
         }
     }
 
-    componentDidMount() {
-       
+    loginUser(email, password){
+        //Registrar en firebase y si el reigstro sale bien redireccionar a Home
+        auth.signInWithEmailAndPassword(email, password)
+            .then( res => {
+                this.props.navigation.navigate('HomeMenu')
+            })
+            .catch(error => console.log(error))
     }
 
-    registerUser(email, password, userName, miniBio, profilePhoto) {
-        if (email === '') {
-            this.setState({ errors: { email: 'el campo email esta vacio' } })
-        } else if (password === '') {
-            this.setState({ errors: { password: 'el campo password esta vacio' } })
-        } else if (userName === '') {
-            this.setState({ errors: { userName: 'el campo userName esta vacio' } })
-        } else {
+    render(){
+        return(
+            <View> 
+                <Text>Login</Text>
+                <View style={styles.container}>
+                   <TextInput  
+                   style={styles.field}
+                       placeholder='email'
+                       keyboardType='email-address'
+                       onChangeText={ text => this.setState({email:text}) }
+                       value={this.state.email}
+                    /> 
+                    <TextInput  
+                    style={styles.field}
+                        placeholder='password'
+                        keyboardType='default'
+                        onChangeText={ text => this.setState({password:text}) }
+                        value={this.state.password}
+                    />  
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(res => {
-
-                    db.collection('users').add({
-                        email: email,
-                        userName: userName,
-                        miniBio: miniBio,
-                        profilePhoto: profilePhoto,
-                        createdAt: Date.now()
-                    })
-                        .then(() => {
-                            this.setState({
-                                email: '',
-                                password: '',
-                                userName: '',
-                                miniBio: '',
-                                profilePhoto: '',
-                                errors: {}
-                            })
-
-                            this.props.navigation.navigate('HomeMenu')
-                        })
-
-                })
-                .catch(error => { console.log(error)
-                    if (error === errors.email) {
-                        console.log(errors.email)
-                    }
-                })
-        }
-    }
-
-
-    render() {
-        return (
-           
-                <Text>Registro</Text>
-                
+                    <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.password)}>
+                        <Text>Ingresar</Text>
+                    </TouchableOpacity>
+                    <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a Registro</Text>
+                </View>
+            </View>
         )
     }
-
+    
 }
 
+const styles = StyleSheet.create({
+    field: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});
 
 export default Login;
