@@ -37,6 +37,12 @@ class MyCamera extends Component {
 
     cancelarFoto() {
         
+            this.setState({
+                temporaryURL: '',
+                showCamera: true
+            })
+        
+        
     }
 
     guardarFoto(){
