@@ -14,7 +14,7 @@ class NewPost extends Component {
             showCamara: true,
         }
     }
-
+//componentdidMount con la coleccion de USERS
     createPost(texto, photo) {
         db.collection('posts').add({
             owner: auth.currentUser.email,

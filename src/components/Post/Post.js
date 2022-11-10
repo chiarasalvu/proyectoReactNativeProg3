@@ -51,7 +51,6 @@ class Post extends Component {
         return (
 
             <View style={styles.container}>
-                <Text style={styles.negrita}> Posteos </Text>
 
                 <Text onPress={() => this.props.navigation.navigate('Profile')} >Nombre del Usurario: {this.props.postData.userName}</Text>
                 <Image
@@ -60,6 +59,8 @@ class Post extends Component {
                     resizeMode='cover'
                 />
                 <Text>Likes: {this.state.cantidadDeLikes} </Text>
+
+                <Text>Comentarios: {this.props.postData.comments.length} </Text>
                 <FlatList
                     data={this.props.postData.comments}
                     keyExtractor={oneComment => oneComment.id.toString()}
