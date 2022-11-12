@@ -20,7 +20,6 @@ class NewPost extends Component {
     createPost(texto, photo) {
         db.collection('posts').add({
             owner: auth.currentUser.email,
-            userName: auth.currentUser.userName,
             textoPost: texto,
             photo: photo,
             likes: [],
