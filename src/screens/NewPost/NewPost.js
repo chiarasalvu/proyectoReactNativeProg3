@@ -4,6 +4,7 @@ import { auth, db } from '../../firebase/config';
 import MyCamara from '../../components/Camera/Camera';
 
 
+
 class NewPost extends Component {
     constructor() {
         super()
@@ -14,7 +15,8 @@ class NewPost extends Component {
             showCamara: true,
         }
     }
-//componentdidMount con la coleccion de USERS
+
+
     createPost(texto, photo) {
         db.collection('posts').add({
             owner: auth.currentUser.email,
