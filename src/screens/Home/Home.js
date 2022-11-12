@@ -8,7 +8,6 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      users: [],
       posts: []
     }
   }
@@ -39,7 +38,7 @@ class Home extends Component {
     return (
       
       <View style ={styles.flatlist}>
-        <Text>Home</Text>
+        <Text>Perfil</Text>
         <FlatList
           data={this.state.posts}
           keyExtractor={onePosts => onePosts.id.toString()}
