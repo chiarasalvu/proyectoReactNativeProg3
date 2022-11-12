@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
-class Home extends Component {
+class Profile extends Component {
   constructor() {
     super();
     this.state = {
@@ -48,9 +48,17 @@ class Home extends Component {
 
   }
 
-  borrarFoto(){
-    
+  borrarFoto(id) {
+    db.collection('posts').doc(id).delete()
   }
+
+  logout() {
+    auth.signOut()
+      .then(() => this.props.navigation.navigate('Login'))
+
+      .catch(e => console.log(e))
+  }
+
 
 
 
@@ -87,14 +95,20 @@ class Home extends Component {
             <Post postData={item.data} id={item.id} />
             <Text>{item.data.textoPost}</Text>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Comments')}>
-                <Text>Borrar posteo</Text>
-              </TouchableOpacity>
-            
+            <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>
+              <Text>Borrar posteo</Text>
+            </TouchableOpacity>
+
+
           </>} //Estamos destructurando todas las props que tiene el componente padre y pasandoselas al componente hijo
 
         /* Avalado por Facu */
+
         />
+
+        <TouchableOpacity onPress={() => this.logout()}>
+          <Text> Desloguearse</Text>
+        </TouchableOpacity>
 
       </View>
     )
@@ -121,5 +135,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home
+export default Profile
 

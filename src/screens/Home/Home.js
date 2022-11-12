@@ -38,7 +38,6 @@ class Home extends Component {
     return (
       
       <View style ={styles.flatlist}>
-        <Text>Perfil</Text>
         <FlatList
           data={this.state.posts}
           keyExtractor={onePosts => onePosts.id.toString()}

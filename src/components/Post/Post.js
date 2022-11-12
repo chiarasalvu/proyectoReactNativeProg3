@@ -52,7 +52,7 @@ class Post extends Component {
 
             <View style={styles.container}>
 
-                <Text onPress={() => this.props.navigation.navigate('Profile')} >Nombre del Usurario: {this.props.postData.userName}</Text>
+                <Text onPress={() => this.props.navigation.navigate('Profile')} >Email del Usurario: {this.props.postData.owner}</Text>
                 <Image
                     style={styles.photo}
                     source={{ uri: this.props.postData.photo }}
