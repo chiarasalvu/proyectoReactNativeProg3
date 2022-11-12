@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import Register from './src/screens/Register/Register';
 import Login from './src/screens/Login/Login';
 import HomeMenu from './src/components/HomeMenu/HomeMenu';
+import Users from './src/screens/Users/Users';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ function App() {
         <Stack.Screen name="Register" component={ Register } />
         <Stack.Screen name="Login" component={ Login } />
         <Stack.Screen name="HomeMenu" component={ HomeMenu } options= {{headerShown: false}} />
+        <Stack.Screen name="Users" component={ Users } />
      </Stack.Navigator>
    </NavigationContainer>
   );

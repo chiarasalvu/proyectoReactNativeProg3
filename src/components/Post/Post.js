@@ -51,8 +51,12 @@ class Post extends Component {
         return (
 
             <View style={styles.container}>
+                {this.props.postData.owner == auth.currentUser.email ?
+                <Text onPress={() => this.props.navigation.navigate('Profile')} >Email del Usurario: {this.props.postData.owner}</Text>
+                :
+                <Text onPress={() => this.props.navigation.navigate('Users', {email: this.props.postData.owner})} >Email del Usurario: {this.props.postData.owner}</Text>
 
-                <Text onPress={() => this.props.navigation.navigate('Profile')} >Nombre del Usurario: {this.props.postData.userName}</Text>
+                }
                 <Image
                     style={styles.photo}
                     source={{ uri: this.props.postData.photo }}

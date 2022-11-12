@@ -93,7 +93,7 @@ class MyCamera extends Component {
                                 <TouchableOpacity onPress={() => this.cancelarFoto()} style={styles.buttonsPreview} >
                                     <AntDesign name="closecircleo" size={40} color="black" />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.guardarFoto()} style={styles.buttonsPreview}>
+                                <TouchableOpacity onPress={() => this.guardarFoto()} >
                                     <AntDesign name="checkcircleo" size={40} color="black" />
                                 </TouchableOpacity>
                             </View>

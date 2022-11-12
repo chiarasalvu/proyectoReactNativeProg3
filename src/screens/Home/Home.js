@@ -13,7 +13,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    db.collection('posts').onSnapshot(
+    db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
       docs => { 
         let posts = []; //si el array esta vacio podriamos poner que no hay resultados de busqueda
         docs.forEach(doc => {
@@ -38,7 +38,6 @@ class Home extends Component {
     return (
       
       <View style ={styles.flatlist}>
-        <Text>Perfil</Text>
         <FlatList
           data={this.state.posts}
           keyExtractor={onePosts => onePosts.id.toString()}

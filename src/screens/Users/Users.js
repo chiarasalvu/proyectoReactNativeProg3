@@ -3,17 +3,17 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
-class Profile extends Component {
-  constructor() {
-    super();
+class Users extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
-      posts: []
+      posts: [],
     }
   }
 
   componentDidMount() {
-    db.collection('users').where('email', '==', auth.currentUser.email).onSnapshot(
+    db.collection('users').where('email', '==', this.props.route.params.email).onSnapshot(
       docs => {
         let users = []; //si el array esta vacio podriamos poner que no hay resultados de busqueda
         docs.forEach(doc => {
@@ -29,7 +29,7 @@ class Profile extends Component {
       }
 
     )
-    db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+    db.collection('posts').where('owner', '==', this.props.route.params.email).onSnapshot(
       docs => {
         let posts = []; //si el array esta vacio podriamos poner que no hay resultados de busqueda
         docs.forEach(doc => {
@@ -48,16 +48,7 @@ class Profile extends Component {
 
   }
 
-  borrarFoto(id) {
-    db.collection('posts').doc(id).delete()
-  }
 
-  logout() {
-    auth.signOut()
-      .then(() => this.props.navigation.navigate('Login'))
-
-      .catch(e => console.log(e))
-  }
 
 
 
@@ -91,24 +82,15 @@ class Profile extends Component {
           data={this.state.posts}
           keyExtractor={onePosts => onePosts.id.toString()}
           renderItem={({ item }) => <>
+          
             <Text> Cantidad de posteos: {this.state.posts.length}</Text>
             <Post postData={item.data} id={item.id} />
             <Text>{item.data.textoPost}</Text>
 
-            <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>
-              <Text>Borrar posteo</Text>
-            </TouchableOpacity>
 
-
-          </>} //Estamos destructurando todas las props que tiene el componente padre y pasandoselas al componente hijo
-
-        /* Avalado por Facu */
+          </>}
 
         />
-
-        <TouchableOpacity onPress={() => this.logout()}>
-          <Text> Desloguearse</Text>
-        </TouchableOpacity>
 
       </View>
     )
@@ -135,5 +117,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Profile
+export default Users
 

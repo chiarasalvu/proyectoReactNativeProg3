@@ -65,8 +65,8 @@ class Register extends Component {
 
                 })
                 .catch(error => { console.log(error)
-                    if (error === errors.email) {
-                        console.log(errors.email)
+                    if (error === this.state.errors.email) {
+                        console.log(this.state.errors.email)
                     }
                 })
         }  
