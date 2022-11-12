@@ -9,7 +9,7 @@ function HomeMenu() {
 
     return (
         <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
-            <Tab.Screen name="HomeStackNavigation" component={HomeStackNavigation} />
+            <Tab.Screen name="HomeStackNavigation" component={HomeStackNavigation} options= {{headerShown: false}}/>
             <Tab.Screen name="Profile" component={Profile} />
             <Tab.Screen name="NewPost" component={NewPost} />
         </Tab.Navigator>

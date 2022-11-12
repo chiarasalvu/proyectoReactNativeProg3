@@ -60,7 +60,7 @@ class Register extends Component {
                                 errors: {}
                             })
 
-                            this.props.navigation.navigate('HomeMenu')
+                            this.props.navigation.navigate('Login')
                         })
 
                 })
