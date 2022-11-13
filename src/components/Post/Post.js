@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
+
 class Post extends Component {
 
     constructor(props) {
@@ -65,12 +66,12 @@ class Post extends Component {
                 <Text>Likes: {this.state.cantidadDeLikes} </Text>
 
                 <Text>Comentarios: {this.props.postData.comments.length} </Text>
-                <FlatList
+                {/* <FlatList //adicional
                     data={this.props.postData.comments}
                     keyExtractor={oneComment => oneComment.id.toString()}
                     renderItem={({ item }) => <Text>{item.text}</Text>}
-                />
-                <TouchableOpacity  onPress={() => this.props.navigation.navigate('Comments')}>
+                />  */}
+                <TouchableOpacity  onPress={() => this.props.navigation.navigate('Comments', {id:this.props.id}) }>
                     <Text>Comentar</Text>
                 </TouchableOpacity>
                 {
