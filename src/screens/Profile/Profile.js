@@ -66,16 +66,17 @@ class Profile extends Component {
   render() {
     return (
 
-      <View style={styles.flatlist}>
+      <View style={styles.container}>
         <Text>Perfil</Text>
 
         <FlatList
+          style={styles.flatList}
           data={this.state.users}
           keyExtractor={oneUser => oneUser.id.toString()}
           renderItem={({ item }) => <>
-            <Text>{item.data.userName}</Text>
-            <Text>{item.data.email}</Text>
-            <Text>{item.data.miniBio}</Text>
+            <Text style={styles.contexto} >{item.data.userName}</Text>
+            <Text style={styles.contexto} >{item.data.email}</Text>
+            <Text style={styles.contexto} >{item.data.miniBio}</Text>
             <Image
               style={styles.photo}
               source={{ uri: item.data.profilePhoto }}
@@ -94,10 +95,10 @@ class Profile extends Component {
           renderItem={({ item }) => <>
             <Text> Cantidad de posteos: {this.state.posts.length}</Text>
             <Post postData={item.data} id={item.id} />
-            <Text>{item.data.textoPost}</Text>
+            <Text style={styles.contexto} >{item.data.textoPost}</Text>
 
             <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>
-              <Text > <AntDesign name="delete" size={20} color="black" />  Borrar posteo</Text>
+              <Text style={styles.contexto} > <AntDesign name="delete" size={20} color="black" />  Borrar posteo</Text>
             </TouchableOpacity>
 
 
@@ -118,8 +119,10 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    textAlign: 'center',
-    padding: 10
+    flex: 2,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   clickeable: {
     padding: 4,
@@ -130,21 +133,14 @@ const styles = StyleSheet.create({
   negrita: {
     fontWeight: 'bold',
   },
-  flatlist: {
-    width: '100%',
-    flex: 1
+  contexto: {
+    alignItems: 'flex-start',
+    padding: 7,
+    marginBottom: 10,
   },
-
-  container: {
-    flex: 1,
-    marginRight: 100,
-    marginLeft: 100,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 2,
-    margin: 10
-}
+  flatList: {
+    //ayuda
+  }
 });
 
 export default Profile

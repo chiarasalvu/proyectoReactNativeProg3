@@ -37,7 +37,7 @@ class Home extends Component {
   render() {
     return (
       
-      <View style ={styles.flatlist}>
+      <View style ={styles.container}>
         <FlatList
           data={this.state.posts}
           keyExtractor={onePosts => onePosts.id.toString()}
@@ -51,10 +51,6 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    textAlign: 'center',
-    padding: 10
-  },
   clickeable: {
     padding: 4,
     backgroundColor: '#ccc',
@@ -64,10 +60,13 @@ const styles = StyleSheet.create({
   negrita: {
     fontWeight: 'bold',
   },
-  flatlist : {
-    width : '100%',
-    flex: 1
-  }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+
 });
 
 export default Home

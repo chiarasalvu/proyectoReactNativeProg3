@@ -56,9 +56,9 @@ class Post extends Component {
 
             <View style={styles.container}>
                 {this.props.postData.owner == auth.currentUser.email ?
-                    <Text onPress={() => this.props.navigation.navigate('Profile')} ><Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
+                    <Text style={styles.contexto} onPress={() => this.props.navigation.navigate('Profile')} ><Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
                     :
-                    <Text onPress={() => this.props.navigation.navigate('Users', { email: this.props.postData.owner })} > <Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
+                    <Text style={styles.contexto} onPress={() => this.props.navigation.navigate('Users', { email: this.props.postData.owner })} > <Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
 
                 }
                 <Image
@@ -69,21 +69,21 @@ class Post extends Component {
                 {
                     this.state.miLike === false ?
 
-                        <TouchableOpacity onPress={() => this.like()}>
+                        <TouchableOpacity style={styles.contexto} onPress={() => this.like()}>
                             <AntDesign name="hearto" size={20} color="black" />
                         </TouchableOpacity> :
 
-                        <TouchableOpacity onPress={() => this.unlike()}>
+                        <TouchableOpacity style={styles.contexto} onPress={() => this.unlike()}>
                             <AntDesign name="heart" size={20} color="red" />
                         </TouchableOpacity>
 
                 }
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Comments', { id: this.props.id })}>
+                <TouchableOpacity style={styles.contexto} onPress={() => this.props.navigation.navigate('Comments', { id: this.props.id })}>
                     <FontAwesome name="comment-o" size={24} color="black" />
                 </TouchableOpacity>
-                <Text  >Likes: {this.state.cantidadDeLikes} </Text>
+                <Text style={styles.contexto}>Likes: {this.state.cantidadDeLikes} </Text>
 
-                <Text>Comentarios: {this.props.postData.comments.length} </Text>
+                <Text style={styles.contexto}>Comentarios: {this.props.postData.comments.length} </Text>
                 {/* <FlatList //adicional
                     data={this.props.postData.comments}
                     keyExtractor={oneComment => oneComment.id.toString()}
@@ -98,21 +98,22 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginRigth: 5,
-        marginLeft: 5
+        flex: 1,
+        backgroundColor: '#fff',
+        width : '100vh'
     },
-    clickeable: {
+    contexto: {
+        alignItems : 'flex-start',
         padding: 7,
-        backgroundColor: 'rgba(0, 255, 0, 0.5)',
         marginBottom: 10,
-        borderRadius: 4
     },
     negrita: {
         fontWeight: 'bold',
     },
     photo: {
         height: '60vh',
-        width: '80vh'
+        width: '80vh',
+        alignItems : 'center'
     }
 });
 

@@ -69,11 +69,11 @@ class MyCamera extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 {
                     this.state.permissions ?
                         this.state.showCamera ?
-                            <View style={styles.cameraStyle}>
+                            <View  style={styles.cameraStyle}>
                                 <Camera
                                     style={styles.cameraStyle}
                                     type={Camera.Constants.Type.front}
@@ -109,12 +109,15 @@ class MyCamera extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     cameraStyle: {
         height: '70vh',
         width: '80vh',
-        //alignItems: 'center'
-
-
         alignItems: 'center',
         justifyContent: 'center'
 
@@ -127,8 +130,6 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 4,
         marginTop: 20,
-
-
         alignItems: 'center',
         justifyContent: 'center'
 
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
     preview: {
         height: '70vh',
         width: '80vh',
+        
 
     },
     // buttonsPreview: {
