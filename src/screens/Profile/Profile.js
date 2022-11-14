@@ -67,7 +67,7 @@ class Profile extends Component {
     return (
 
       <View style={styles.container}>
-        <Text>Perfil</Text>
+        
 
         <FlatList
           style={styles.flatList}
@@ -87,7 +87,7 @@ class Profile extends Component {
           }
         />
 
-        <Text style={styles.negrita}> Posteos </Text>
+       
 
         <FlatList
           data={this.state.posts}
@@ -102,9 +102,7 @@ class Profile extends Component {
             </TouchableOpacity>
 
 
-          </>} //Estamos destructurando todas las props que tiene el componente padre y pasandoselas al componente hijo
-
-        /* Avalado por Facu */
+          </>} 
 
         />
 
@@ -123,6 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
   clickeable: {
     padding: 4,
@@ -130,9 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 4
   },
-  negrita: {
-    fontWeight: 'bold',
-  },
+  
   contexto: {
     alignItems: 'flex-start',
     padding: 7,
