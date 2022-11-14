@@ -35,11 +35,11 @@ class Register extends Component {
 
         if (this.state.email === '') {
 
-            this.setState({ errors: 'el campo email esta vacio' })
+            this.setState({ errors: 'El campo de email esta vacío' })
         } else if (this.state.password === '') {
-            this.setState({ errors: 'el campo password esta vacio' })
+            this.setState({ errors: 'El campo de contraseña esta vacío' })
         } else if (this.state.userName === '') {
-            this.setState({ errors: 'el campo userName esta vacio' })
+            this.setState({ errors: 'El campo de nombre de usuario esta vacío' })
         } else {
 
             auth.createUserWithEmailAndPassword(email, password)
@@ -75,9 +75,8 @@ class Register extends Component {
 
     render() {
         return (
-            <View>
-
-                <Text> {this.state.errors} </Text>
+            <View style={styles.container}>
+                <Text style={styles.error}> {this.state.errors} </Text>
                 <View style={styles.container}>
                     <Ionicons name="person-outline" size={50} color="black" />
                     <TextInput
@@ -117,7 +116,7 @@ class Register extends Component {
                         value={this.state.profilePhoto}
                     />
                     {(this.state.email, this.state.password, this.state.userName) === '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto)}>
+                        <TouchableOpacity style={styles.botonDesactivado}>
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
@@ -173,6 +172,12 @@ const styles = StyleSheet.create({
     },
     negrita: {
         fontWeight: 'bold',
+    },
+    error: {
+        color: 'red',
+        backgroundColor: 'white',
+        fontWeight: 'bold',
+
     }
 });
 

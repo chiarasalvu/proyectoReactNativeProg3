@@ -87,7 +87,7 @@ class MyCamera extends Component {
 
                             <View style={styles.preview}>
                                 <TouchableOpacity onPress={() => this.cancelarFoto()} style={styles.buttonsPreview} >
-                                    <AntDesign name="close" size={24} color="black" />
+                                    <AntDesign name="close" size={30} color="red" />
                                 </TouchableOpacity>
                                 <Image
                                     style={styles.preview}
@@ -96,7 +96,7 @@ class MyCamera extends Component {
                                 />
 
                                 <TouchableOpacity onPress={() => this.guardarFoto()} >
-                                    <MaterialIcons name="arrow-forward" size={24} color="black" />
+                                    <MaterialIcons name="arrow-forward" size={30} color="green" />
                                 </TouchableOpacity>
                             </View>
                         :
@@ -105,7 +105,6 @@ class MyCamera extends Component {
             </View>
         )
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
         width: '80vh',
         alignItems: 'center',
         justifyContent: 'center'
-
     },
     button: {
         height: '4vh',
@@ -132,25 +130,16 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center'
-
     },
     preview: {
         height: '70vh',
-        width: '80vh',
-        
-
+        width: '80vh'
     },
     // buttonsPreview: {
     //     flex: 2,
     //     flexDirection: 'row', 
     //     justifyContent: 'center',
-
-
-
-
     // }
-
-
 
 })
 
