@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
+import { AntDesign } from '@expo/vector-icons';
 
 class Profile extends Component {
   constructor() {
@@ -96,7 +97,7 @@ class Profile extends Component {
             <Text>{item.data.textoPost}</Text>
 
             <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>
-              <Text>Borrar posteo</Text>
+              <Text > <AntDesign name="delete" size={20} color="black" />  Borrar posteo</Text>
             </TouchableOpacity>
 
 
@@ -107,7 +108,7 @@ class Profile extends Component {
         />
 
         <TouchableOpacity onPress={() => this.logout()}>
-          <Text> Desloguearse</Text>
+          <Text style={styles.container}> <AntDesign name="logout" size={20} color="black" />   Cerrar sesión</Text>
         </TouchableOpacity>
 
       </View>
@@ -132,7 +133,18 @@ const styles = StyleSheet.create({
   flatlist: {
     width: '100%',
     flex: 1
-  }
+  },
+
+  container: {
+    flex: 1,
+    marginRight: 100,
+    marginLeft: 100,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 2,
+    margin: 10
+}
 });
 
 export default Profile

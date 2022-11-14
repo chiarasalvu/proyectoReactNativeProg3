@@ -109,7 +109,9 @@ const styles = StyleSheet.create({
   flatlist: {
     width: '100%',
     flex: 1
-  }
+  },
+
+  
 });
 
 export default Users

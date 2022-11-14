@@ -3,6 +3,7 @@ import { Camera } from 'expo-camera';
 import { storage } from '../../firebase/config';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 class MyCamera extends Component {
     constructor(props) {
@@ -85,16 +86,17 @@ class MyCamera extends Component {
                             :
 
                             <View style={styles.preview}>
+                                <TouchableOpacity onPress={() => this.cancelarFoto()} style={styles.buttonsPreview} >
+                                    <AntDesign name="close" size={24} color="black" />
+                                </TouchableOpacity>
                                 <Image
                                     style={styles.preview}
                                     source={{ uri: this.state.temporaryURL }}
                                     resizeMode='cover'
                                 />
-                                <TouchableOpacity onPress={() => this.cancelarFoto()} style={styles.buttonsPreview} >
-                                    <AntDesign name="closecircleo" size={40} color="black" />
-                                </TouchableOpacity>
+
                                 <TouchableOpacity onPress={() => this.guardarFoto()} >
-                                    <AntDesign name="checkcircleo" size={40} color="black" />
+                                    <MaterialIcons name="arrow-forward" size={24} color="black" />
                                 </TouchableOpacity>
                             </View>
                         :
@@ -111,7 +113,10 @@ const styles = StyleSheet.create({
         height: '70vh',
         width: '80vh',
         //alignItems: 'center'
-        
+
+
+        alignItems: 'center',
+        justifyContent: 'center'
 
     },
     button: {
@@ -122,7 +127,11 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 4,
         marginTop: 20,
-        
+
+
+        alignItems: 'center',
+        justifyContent: 'center'
+
     },
     preview: {
         height: '70vh',
@@ -133,10 +142,10 @@ const styles = StyleSheet.create({
     //     flex: 2,
     //     flexDirection: 'row', 
     //     justifyContent: 'center',
-       
-        
-       
-    
+
+
+
+
     // }
 
 

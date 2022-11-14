@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 class Login extends Component {
     constructor() {
@@ -32,9 +33,10 @@ class Login extends Component {
         render() {
             return (
                 <View>
-                    <Text>Login</Text>
+                   
                     <Text> { this.state.errors } </Text>
                     <View style={styles.container}>
+                    <Ionicons name="person-outline" size={50} color="black" />
                         <TextInput
                             style={styles.field}
                             placeholder='email'

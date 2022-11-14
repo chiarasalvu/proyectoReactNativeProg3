@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 class Post extends Component {
@@ -53,9 +56,9 @@ class Post extends Component {
 
             <View style={styles.container}>
                 {this.props.postData.owner == auth.currentUser.email ?
-                <Text onPress={() => this.props.navigation.navigate('Profile')} >Email del Usurario: {this.props.postData.owner}</Text>
-                :
-                <Text onPress={() => this.props.navigation.navigate('Users', {email: this.props.postData.owner})} >Email del Usurario: {this.props.postData.owner}</Text>
+                    <Text onPress={() => this.props.navigation.navigate('Profile')} ><Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
+                    :
+                    <Text onPress={() => this.props.navigation.navigate('Users', { email: this.props.postData.owner })} > <Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
 
                 }
                 <Image
@@ -63,7 +66,22 @@ class Post extends Component {
                     source={{ uri: this.props.postData.photo }}
                     resizeMode='cover'
                 />
-                <Text>Likes: {this.state.cantidadDeLikes} </Text>
+                {
+                    this.state.miLike === false ?
+
+                        <TouchableOpacity onPress={() => this.like()}>
+                            <AntDesign name="hearto" size={20} color="black" />
+                        </TouchableOpacity> :
+
+                        <TouchableOpacity onPress={() => this.unlike()}>
+                            <AntDesign name="heart" size={20} color="red" />
+                        </TouchableOpacity>
+
+                }
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Comments', { id: this.props.id })}>
+                    <FontAwesome name="comment-o" size={24} color="black" />
+                </TouchableOpacity>
+                <Text  >Likes: {this.state.cantidadDeLikes} </Text>
 
                 <Text>Comentarios: {this.props.postData.comments.length} </Text>
                 {/* <FlatList //adicional
@@ -71,21 +89,8 @@ class Post extends Component {
                     keyExtractor={oneComment => oneComment.id.toString()}
                     renderItem={({ item }) => <Text>{item.text}</Text>}
                 />  */}
-                <TouchableOpacity  onPress={() => this.props.navigation.navigate('Comments', {id:this.props.id}) }>
-                    <Text>Comentar</Text>
-                </TouchableOpacity>
-                {
-                    this.state.miLike === false ?
-
-                        <TouchableOpacity onPress={() => this.like()}>
-                            <Text>Me Gusta</Text>
-                        </TouchableOpacity> :
-
-                        <TouchableOpacity onPress={() => this.unlike()}>
-                            <Text>No Me Gusta</Text>
-                        </TouchableOpacity>
-
-                }
+                
+                
             </View>
         );
     }
@@ -106,7 +111,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     photo: {
-        height: '40vh'
+        height: '60vh',
+        width: '80vh'
     }
 });
 
