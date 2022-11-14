@@ -51,16 +51,16 @@ class Users extends Component {
   render() {
     return (
 
-      <View style={styles.flatlist}>
+      <View style={styles.container}>
         <Text>Perfil</Text>
 
         <FlatList
           data={this.state.users}
           keyExtractor={oneUser => oneUser.id.toString()}
           renderItem={({ item }) => <>
-            <Text>{item.data.userName}</Text>
-            <Text>{item.data.email}</Text>
-            <Text>{item.data.miniBio}</Text>
+            <Text style={styles.contexto}>{item.data.userName}</Text>
+            <Text style={styles.contexto}>{item.data.email}</Text>
+            <Text style={styles.contexto}>{item.data.miniBio}</Text>
             <Image
               style={styles.photo}
               source={{ uri: item.data.profilePhoto }}
@@ -94,8 +94,10 @@ class Users extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    textAlign: 'center',
-    padding: 10
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   clickeable: {
     padding: 4,
@@ -106,11 +108,11 @@ const styles = StyleSheet.create({
   negrita: {
     fontWeight: 'bold',
   },
-  flatlist: {
-    width: '100%',
-    flex: 1
+  contexto: {
+    alignItems: 'flex-start',
+    padding: 7,
+    marginBottom: 10,
   },
-
   
 });
 

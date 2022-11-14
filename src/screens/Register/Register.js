@@ -59,7 +59,7 @@ class Register extends Component {
                                 userName: '',
                                 miniBio: '',
                                 profilePhoto: '',
-                                errors: {}
+                                errors: ''
                             })
 
                             this.props.navigation.navigate('Login')
@@ -68,9 +68,6 @@ class Register extends Component {
                 })
                 .catch(error => {
                     console.log(error)
-                    if (error === this.state.errors.email) {
-                        console.log(this.state.errors.email)
-                    }
                 })
         }
     }

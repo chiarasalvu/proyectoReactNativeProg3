@@ -3,16 +3,13 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput } 
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
-class Profile extends Component {
+class Filter extends Component {
     constructor() {
         super();
         this.state = {
             users: [],
-            email: [],
-            emailInicial: [],
-            usuario: [],
-            usuarioInicial: [],
-            busqueda: ''
+            filteredUsers: [],
+            text: '',
         }
     }
 
@@ -35,15 +32,14 @@ class Profile extends Component {
         )
     }
 
-    controlarCambios(email) {
-        this.setState({ busqueda: email }, () => this.filtrarUsuarioEmail(this.state.busqueda))
-    }
+    controlarCambios(textoDelUsuario) {
 
-    filtrarUsuarioEmail(textoDelUsuario) {
-        let emailFiltradas = this.state.emailInicial.filter(unEmail => unEmail.toLowerCase().includes(textoDelUsuario.toLowerCase()));
-        this.setState({
-            email: emailFiltradas,
-        })
+       const filteredUsers = this.state.users.filter(user => user.data.userName.toLowerCase().includes(textoDelUsuario.toLowerCase()));
+
+       this.setState({
+        filteredUsers, //ej: filteredUsers: filteredUsers
+        text: textoDelUsuario
+       })
     }
 
     render() {
@@ -52,38 +48,26 @@ class Profile extends Component {
             <View>
                 <Text>Buscador</Text>
 
-                <FlatList
-                    data={this.state.users}
-                    keyExtractor={oneUser => oneUser.id.toString()}
-                    renderItem={({ item }) => <>
-                        <Text>{item.data.userName}</Text>
-                        <Text>{item.data.email}</Text>
-                    </>
-
-                    }
-                />
-
                 <TextInput
                     placeholder='Busqueda de usuarios'
                     keyboardType='default'
-                    onChangeText={email => this.controlarCambios(email)}
-                    value={this.state.email}
+                    onChangeText={text => this.controlarCambios(text)}
+                    value={this.state.text}
                 />
 
-                {
-                    this.state.email.length === 0 ?
-                        <>No se encontraron resultados</>
-                        :
-                        <FlatList
-                            data={this.state.users}
-                            keyExtractor={oneUser => oneUser.id.toString()}
-                            renderItem={({ item }) => <>
-                                <Text>{item.data.userName}</Text>
-                                <Text>{item.data.email}</Text>
-                            </>
 
-                            }
-                        />
+                {
+                    this.state.text === '' ? 
+                        <></>
+                        :
+                        this.state.filteredUsers.length === 0 ?
+                            <>No se encontraron resultados</>
+                            :
+                            <FlatList
+                                data={this.state.filteredUsers}
+                                keyExtractor={oneUser => oneUser.id.toString()}
+                                renderItem={({ item }) => <Text>{item.data.userName}</Text>} //navigate
+                            />
                 }
 
             </View>
@@ -91,5 +75,5 @@ class Profile extends Component {
     }
 }
 
-export default Profile
+export default Filter
 
