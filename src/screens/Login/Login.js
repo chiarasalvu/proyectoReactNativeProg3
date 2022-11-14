@@ -33,9 +33,8 @@ class Login extends Component {
 
     render() {
         return (
-            <View>
-
-                <Text> {this.state.errors} </Text>
+            <View style={styles.container}>
+                <Text style={styles.error}> {this.state.errors} </Text>
                 <View style={styles.container}>
                     <Ionicons name="person-outline" size={50} color="black" />
                     <TextInput
@@ -55,7 +54,7 @@ class Login extends Component {
                     />
 
                     {(this.state.email, this.state.password) === '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.loginUser(this.state.email, this.state.password)}>
+                        <TouchableOpacity style={styles.botonDesactivado}>
                             <Text style={styles.letra}>Ingresar</Text>
                         </TouchableOpacity> :
                         <TouchableOpacity style={styles.boton} onPress={() => this.loginUser(this.state.email, this.state.password)}>
@@ -107,6 +106,12 @@ const styles = StyleSheet.create({
     },
     negrita: {
         fontWeight: 'bold',
+    },
+    error: {
+        color: 'red',
+        backgroundColor: 'white',
+        fontWeight: 'bold',
+
     }
 });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { auth, db } from '../../firebase/config';
 import MyCamara from '../../components/Camera/Camera';
 
@@ -45,16 +45,15 @@ class NewPost extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 {
                     this.state.showCamara ?
                         <MyCamara onImageUpload= { url => this.onImageUpload(url)}/>
                         :
-                        <View>
-                            <Text> Nuevo posteo </Text>
-                            <View>
+                            <View style={styles.container}>
                                 <TextInput
-                                    placeholder='texto post'
+                                style={styles.field}
+                                    placeholder='Enviar una descripción...'
                                     keyboardType='default'
                                     //poner propiedad para transformarlo en textArea
                                     onChangeText={text => this.setState({ textoPost: text })}
@@ -64,12 +63,27 @@ class NewPost extends Component {
                                     <Text>Guardar</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
                 }
 
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    field: {
+        display: 'flex',
+        height: 40,
+        margin: 15,
+        borderWidth: 1,
+        padding: 10,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});
 
 export default NewPost;

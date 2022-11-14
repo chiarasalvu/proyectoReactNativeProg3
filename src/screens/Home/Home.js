@@ -32,8 +32,6 @@ class Home extends Component {
 
   }
 
-
-
   render() {
     return (
       
@@ -51,23 +49,13 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  clickeable: {
-    padding: 4,
-    backgroundColor: '#ccc',
-    marginBottom: 10,
-    borderRadius: 4
-  },
-  negrita: {
-    fontWeight: 'bold',
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-},
-
+  }
 });
 
-export default Home
+export default Home;
 
