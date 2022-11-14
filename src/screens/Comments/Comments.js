@@ -10,29 +10,20 @@ class Comments extends Component {
         this.state = {
             comments: '',
             id: this.props.route.params.id,
-            cantidadDeComentarios: []
+            post: []
         }
     }
 
 
-    // componentDidMount() {
-    //     db.collection('posts').onSnapshot(
-    //         docs => {
-    //             let cantidadDeComentarios = [];
-    //             docs.forEach(doc => {
-    //                 cantidadDeComentarios.push({
-    //                     id: doc.id,
-    //                     data: doc.data()
-    //                 })
-    //                     .then(() => this.setState({
-    //                         cantidadDeComentarios: cantidadDeComentarios
-    //                     }))
-    //                     .catch(e => console.log(e))
-
-    //             })
-    //         }
-    //     )
-    // }
+    componentDidMount() {
+        db.collection('posts').doc(this.state.id).onSnapshot(
+            doc => {
+                this.setState({
+                    post: doc.data()
+                })
+            }
+        )
+    }
 
 
     enviarComment(comments) {
@@ -55,19 +46,21 @@ class Comments extends Component {
     render() {
         return (
             <>
-                {/* {
-                    this.state.cantidadDeComentarios.length == 0 ?
+                {
+                    this.state.post.comments?.length === 0 ?
                         <Text> Aún no hay comentarios</Text>
                         :
-                        <> */}
+                        <> 
                             <FlatList
-                                data={this.state.cantidadDeComentarios}
-                                keyExtractor={oneComment => oneComment.id.toString()}
-                                renderItem={({ item }) => <Text>{item.data}</Text>}
+                                data={this.state.post.comments}
+                                keyExtractor={oneComment => oneComment.createdAt.toString()}
+                                renderItem={({ item }) => <><Text style= {styles.negrita}> {item.owner}: </Text> <Text> 
+                                {item.comments}</Text>  </>}
+                                //falta poner el nombre del usuario que hizo el comentario
                             />
-                        {/* </>
+                        </>
 
-                } */}
+                }
                 <View style={styles.container}>
 
                     <TextInput
@@ -101,7 +94,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    negrita: {
+        fontWeight: 'bold',
+        
+      }
 });
 
 
