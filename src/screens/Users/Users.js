@@ -23,7 +23,7 @@ class Users extends Component {
             data: doc.data()
           })
           this.setState({
-            users: users,
+            users,
             loading: false
           })
 
@@ -40,7 +40,8 @@ class Users extends Component {
             data: doc.data()
           })
           this.setState({
-            posts: posts
+            posts,
+            loading: false
           })
 
         })

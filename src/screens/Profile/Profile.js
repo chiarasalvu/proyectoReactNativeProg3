@@ -13,7 +13,9 @@ class Profile extends Component {
       users: [],
       posts: [],
       usuarioLogueado: auth.currentUser.email,
-      loading: true
+      // loading: true,
+      loading: false
+      
     }
   }
 
@@ -27,10 +29,11 @@ class Profile extends Component {
             data: doc.data()
           })
           this.setState({
-            users: users,
-            loading: false
-
-          })
+            users: users ,
+            // loading: false,
+            
+          },
+          ()=> console.log(this.state.users) )
 
         })
       }
@@ -45,8 +48,11 @@ class Profile extends Component {
             data: doc.data()
           })
           this.setState({
-            posts: posts
-          })
+            posts,
+            // loading: false
+          },
+          ()=> console.log(this.state.posts) )
+          
 
         })
       }
@@ -70,10 +76,17 @@ class Profile extends Component {
       .catch(e => console.log(e))
   }
 
-  eliminarPerfil() {
-    db.collection('users').doc(this.props.route.params.id).delete()
-      .then(() => this.props.navigation.navigate('Register'))
 
+  eliminarPerfil() {
+      
+      db.collection("users").doc(this.state.users.id).delete()
+      .then(()=> {
+          auth.currentUser.delete()
+      })
+      .then(()=> {
+          this.props.navigation.navigate('Register')
+      
+      })
       .catch(e => console.log(e))
   }
 
@@ -82,7 +95,7 @@ class Profile extends Component {
 
       <View style={styles.container}>
 
-        {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+        {this.state.loading  ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
           <>
             <FlatList
               style={styles.flatList}

@@ -1,6 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../../screens/Home/Home';
 import Comments from '../../screens/Comments/Comments';
+import Profile from '../../screens/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 

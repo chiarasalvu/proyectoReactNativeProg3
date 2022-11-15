@@ -1,6 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
 import Register from './src/screens/Register/Register';
 import Login from './src/screens/Login/Login';
 import HomeMenu from './src/components/HomeMenu/HomeMenu';

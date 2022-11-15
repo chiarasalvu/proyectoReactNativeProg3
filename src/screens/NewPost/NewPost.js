@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { auth, db } from '../../firebase/config';
-import MyCamara from '../../components/Camera/Camera';
+import MyCamera from '../../components/Camera/Camera';
 
 
 
@@ -48,7 +48,7 @@ class NewPost extends Component {
             <View style={styles.container}>
                 {
                     this.state.showCamara ?
-                        <MyCamara onImageUpload= { url => this.onImageUpload(url)}/>
+                        <MyCamera onImageUpload= { url => this.onImageUpload(url)}/>
                         :
                             <View style={styles.container}>
                                 <TextInput

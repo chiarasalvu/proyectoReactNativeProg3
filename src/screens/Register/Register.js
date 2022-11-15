@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { auth, db } from '../../firebase/config';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import MyCamera from '../../components/Camera/Camera';
 
 class Register extends Component {
     constructor() {
@@ -18,7 +13,9 @@ class Register extends Component {
             userName: '',
             miniBio: '',
             profilePhoto: '',
-            errors: ''
+            errors: '',
+            showCamara: true,
+            mostrar: false
         }
     }
 
@@ -59,7 +56,8 @@ class Register extends Component {
                                 userName: '',
                                 miniBio: '',
                                 profilePhoto: '',
-                                errors: ''
+                                errors: '',
+                                showCamara: true,
                             })
 
                             this.props.navigation.navigate('Login')
@@ -72,11 +70,27 @@ class Register extends Component {
         }
     }
 
+    onImageUpload(url) {
+        this.setState({
+            profilePhoto: url,
+            showCamara: false,
+        })
+    }
+
+    mostrarCamera() {
+        this.setState({
+            mostrar: true
+        })
+    }
+
+    error(){
+        alert(this.state.errors)
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.error}> {this.state.errors} </Text>
+            
                 <View style={styles.container}>
                     <Ionicons name="person-outline" size={50} color="black" />
                     <TextInput
@@ -108,15 +122,23 @@ class Register extends Component {
                         onChangeText={text => this.setState({ miniBio: text })}
                         value={this.state.miniBio}
                     />
-                    <TextInput
-                        style={styles.field}
-                        placeholder='Foto de perfil'
-                        keyboardType='default'
-                        onChangeText={text => this.setState({ profilePhoto: text })}
-                        value={this.state.profilePhoto}
-                    />
+                    <TouchableOpacity style={styles.field} onPress={() => this.mostrarCamera()}>
+                        <Text style={styles.letra}> Tocá para sacar foto de perfil </Text>
+                    </TouchableOpacity>
+
+                    {
+                        this.state.mostrar ?
+
+                            <MyCamera onImageUpload={url => this.onImageUpload(url)} />
+                            :
+                           ''
+                    }
+
+
+
+
                     {(this.state.email, this.state.password, this.state.userName) === '' ?
-                        <TouchableOpacity style={styles.botonDesactivado}>
+                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.errors() }>  
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
@@ -130,6 +152,7 @@ class Register extends Component {
                     <Text style={styles.negrita} onPress={() => this.props.navigation.navigate('Login')} >Ir a login</Text>
 
                 </View>
+                
             </View>
         )
     }
