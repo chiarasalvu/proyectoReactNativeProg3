@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        width : '100vh'
+        width : '100%'
     },
     contexto: {
         alignItems : 'flex-start',
@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     photo: {
-        height: '60vh',
-        width: '80vh',
+        height: 350,
         alignItems : 'center'
     }
 });

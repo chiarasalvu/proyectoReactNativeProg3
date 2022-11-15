@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     cameraStyle: {
-        height: '70vh',
-        width: '80vh',
+        height: '70%',
+        width: '80%',
         alignItems: 'center',
         justifyContent: 'center'
     },
     button: {
-        height: '4vh',
-        width: '8vh',
+        height: '4%',
+        width: '2%',
         borderColor: 'white',
         borderWidth: 1,
         padding: 5,
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     preview: {
-        height: '70vh',
-        width: '80vh'
+        height: '70%',
+        width: '80%'
     },
     // buttonsPreview: {
     //     flex: 2,

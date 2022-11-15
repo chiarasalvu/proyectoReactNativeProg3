@@ -1,15 +1,18 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 import { AntDesign } from '@expo/vector-icons';
+
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
       users: [],
-      posts: []
+      posts: [],
+      usuarioLogueado : auth.currentUser.email,
+      loading: true
     }
   }
 
@@ -23,7 +26,9 @@ class Profile extends Component {
             data: doc.data()
           })
           this.setState({
-            users: users
+            users: users,
+            loading: false
+
           })
 
         })
@@ -50,7 +55,11 @@ class Profile extends Component {
   }
 
   borrarFoto(id) {
-    db.collection('posts').doc(id).delete()
+    let alert = confirm('¿Desea borrar el posteo?') 
+    {
+      alert ? db.collection('posts').doc(id).delete() : console.log('No deseo borrar');
+    }
+    
   }
 
   logout() {
@@ -60,15 +69,18 @@ class Profile extends Component {
       .catch(e => console.log(e))
   }
 
+ 
 
+  
 
 
   render() {
     return (
-
+      
       <View style={styles.container}>
         
-
+        {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+        <>
         <FlatList
           style={styles.flatList}
           data={this.state.users}
@@ -82,7 +94,7 @@ class Profile extends Component {
               source={{ uri: item.data.profilePhoto }}
               resizeMode='cover'
             />
-          </>
+          </> 
 
           }
         />
@@ -102,14 +114,21 @@ class Profile extends Component {
             </TouchableOpacity>
 
 
-          </>} 
-
+          </>}
+  
         />
-
-        <TouchableOpacity onPress={() => this.logout()}>
-          <Text style={styles.container}> <AntDesign name="logout" size={20} color="black" />   Cerrar sesión</Text>
+        
+        <TouchableOpacity onPress={() => this.eliminarPerfil()}>
+          <Text style={styles.contexto}> <AntDesign name="logout" size={20} color="black" />   Eliminar Perfil</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => this.logout()}>
+          <Text style={styles.contexto}> <AntDesign name="logout" size={20} color="black" />   Cerrar sesión</Text>
+        </TouchableOpacity>
+
+        
+        
+        </>}
       </View>
     )
   }
@@ -117,11 +136,8 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    
   },
   clickeable: {
     padding: 4,
