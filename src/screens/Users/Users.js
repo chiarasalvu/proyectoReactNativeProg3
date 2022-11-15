@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
@@ -9,6 +9,7 @@ class Users extends Component {
     this.state = {
       users: [],
       posts: [],
+      loading: true
     }
   }
 
@@ -22,7 +23,8 @@ class Users extends Component {
             data: doc.data()
           })
           this.setState({
-            users: users
+            users: users,
+            loading: false
           })
 
         })
@@ -54,39 +56,41 @@ class Users extends Component {
       <View style={styles.container}>
         <Text>Perfil</Text>
 
-        <FlatList
-          data={this.state.users}
-          keyExtractor={oneUser => oneUser.id.toString()}
-          renderItem={({ item }) => <>
-            <Text style={styles.contexto}>{item.data.userName}</Text>
-            <Text style={styles.contexto}>{item.data.email}</Text>
-            <Text style={styles.contexto}>{item.data.miniBio}</Text>
-            <Image
-              style={styles.photo}
-              source={{ uri: item.data.profilePhoto }}
-              resizeMode='cover'
+        {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+          <>
+            <FlatList
+              data={this.state.users}
+              keyExtractor={oneUser => oneUser.id.toString()}
+              renderItem={({ item }) => <>
+                <Text style={styles.contexto}>{item.data.userName}</Text>
+                <Text style={styles.contexto}>{item.data.email}</Text>
+                <Text style={styles.contexto}>{item.data.miniBio}</Text>
+                <Image
+                  style={styles.photo}
+                  source={{ uri: item.data.profilePhoto }}
+                  resizeMode='cover'
+                />
+              </>
+
+              }
             />
-          </>
 
-          }
-        />
+            <Text style={styles.negrita}> Posteos </Text>
 
-        <Text style={styles.negrita}> Posteos </Text>
+            <FlatList
+              data={this.state.posts}
+              keyExtractor={onePosts => onePosts.id.toString()}
+              renderItem={({ item }) => <>
 
-        <FlatList
-          data={this.state.posts}
-          keyExtractor={onePosts => onePosts.id.toString()}
-          renderItem={({ item }) => <>
-          
-            <Text> Cantidad de posteos: {this.state.posts.length}</Text>
-            <Post postData={item.data} id={item.id} />
-            <Text>{item.data.textoPost}</Text>
+                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+                <Post postData={item.data} id={item.id} />
+                <Text>{item.data.textoPost}</Text>
 
 
+              </>}
+
+            />
           </>}
-
-        />
-
       </View>
     )
   }
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 7,
     marginBottom: 10,
   },
-  
+
 });
 
 export default Users

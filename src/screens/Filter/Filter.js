@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { auth, db } from '../../firebase/config'
-import Post from '../../components/Post/Post'
+import { MaterialIcons } from '@expo/vector-icons';
 
 class Filter extends Component {
     constructor() {
@@ -10,6 +10,7 @@ class Filter extends Component {
             users: [],
             filteredUsers: [],
             text: '',
+            loading: true
         }
     }
 
@@ -23,7 +24,8 @@ class Filter extends Component {
                         data: doc.data()
                     })
                     this.setState({
-                        users: users
+                        users: users,
+                        loading: false
                     })
 
                 })
@@ -34,46 +36,63 @@ class Filter extends Component {
 
     controlarCambios(textoDelUsuario) {
 
-       const filteredUsers = this.state.users.filter(user => user.data.userName.toLowerCase().includes(textoDelUsuario.toLowerCase()));
+        const filteredUsers = this.state.users.filter(user => user.data.userName.toLowerCase().includes(textoDelUsuario.toLowerCase()));
 
-       this.setState({
-        filteredUsers, //ej: filteredUsers: filteredUsers
-        text: textoDelUsuario
-       })
+        this.setState({
+            filteredUsers, //ej: filteredUsers: filteredUsers
+            text: textoDelUsuario
+        })
     }
 
     render() {
         return (
+            
+            <View style={styles.container}>
+                <MaterialIcons name="person-search" size={40} color="black" />
+                {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+                    <>
+                        <TextInput 
+                        style={styles.field}
+                            placeholder='Búsqueda de usuarios'
+                            keyboardType='default'
+                            onChangeText={text => this.controlarCambios(text)}
+                            value={this.state.text}
+                        />
 
-            <View>
-                <Text>Buscador</Text>
 
-                <TextInput
-                    placeholder='Busqueda de usuarios'
-                    keyboardType='default'
-                    onChangeText={text => this.controlarCambios(text)}
-                    value={this.state.text}
-                />
-
-
-                {
-                    this.state.text === '' ? 
-                        <></>
-                        :
-                        this.state.filteredUsers.length === 0 ?
-                            <>No se encontraron resultados</>
-                            :
-                            <FlatList
-                                data={this.state.filteredUsers}
-                                keyExtractor={oneUser => oneUser.id.toString()}
-                                renderItem={({ item }) => <Text>{item.data.userName}</Text>} //navigate
-                            />
-                }
-
+                        {
+                            this.state.text === '' ?
+                                <></>
+                                :
+                                this.state.filteredUsers.length === 0 ?
+                                    <>No se encontraron resultados</>
+                                    :
+                                    <FlatList 
+                                        data={this.state.filteredUsers}
+                                        keyExtractor={oneUser => oneUser.id.toString()}
+                                        renderItem={({ item }) => <Text>{item.data.userName}</Text>} //navigate
+                                    />
+                        }
+                    </>}
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    field: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});
 
 export default Filter
 

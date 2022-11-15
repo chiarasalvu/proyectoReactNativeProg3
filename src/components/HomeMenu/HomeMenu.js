@@ -16,7 +16,7 @@ function HomeMenu() {
             <Tab.Screen name="Home" component={HomeStackNavigation} options={{tabBarIcon: ()=> <SimpleLineIcons name="home" size={24} color="black" /> } } />
             <Tab.Screen name="Profile" component={Profile}  options={{tabBarIcon: ()=> <Ionicons name="person-outline" size={24} color="black" /> } }/>
             <Tab.Screen name="New Post" component={NewPost} options= {{tabBarIcon: ()=> <AntDesign name="pluscircleo" size={24} color="black" />} } />
-            <Tab.Screen name="Filter" component={ Filter } options={{tabBarIcon: ()=> <AntDesign name="search1" size={24} color="black" /> }}/>
+            <Tab.Screen name="Buscador" component={ Filter } options={{tabBarIcon: ()=> <AntDesign name="search1" size={24} color="black" /> }}/>
         </Tab.Navigator>
     )
 }

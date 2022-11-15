@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from "react-native"
 import React, { Component } from 'react'
 import { db, auth } from '../../firebase/config'
 import firebase from 'firebase';
@@ -10,7 +10,8 @@ class Comments extends Component {
         this.state = {
             comments: '',
             id: this.props.route.params.id,
-            post: []
+            post: [],
+            loading: true
         }
     }
 
@@ -19,7 +20,8 @@ class Comments extends Component {
         db.collection('posts').doc(this.state.id).onSnapshot(
             doc => {
                 this.setState({
-                    post: doc.data()
+                    post: doc.data(),
+                    loading: false
                 })
             }
         )
@@ -45,36 +47,41 @@ class Comments extends Component {
 
     render() {
         return (
+
             <>
-                {
-                    this.state.post.comments?.length === 0 ?
-                        <Text> Aún no hay comentarios</Text>
-                        :
-                        <> 
-                            <FlatList
-                                data={this.state.post.comments}
-                                keyExtractor={oneComment => oneComment.createdAt.toString()}
-                                renderItem={({ item }) => <><Text style= {styles.negrita}> {item.owner}: </Text> <Text> 
-                                {item.comments}</Text>  </>}
-                                //falta poner el nombre del usuario que hizo el comentario
+                {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+                    <>
+                        {
+                            this.state.post.comments?.length === 0 ?
+                                <Text> Aún no hay comentarios</Text>
+                                :
+                                <>
+                                    <FlatList
+                                        data={this.state.post.comments}
+                                        keyExtractor={oneComment => oneComment.createdAt.toString()}
+                                        renderItem={({ item }) => <><Text style={styles.negrita}> {item.owner}: </Text> <Text>
+                                            {item.comments}</Text>  </>}
+                                    //falta poner el nombre del usuario que hizo el comentario
+                                    />
+                                </>
+
+                        }
+                        <View style={styles.container}>
+
+                            <TextInput
+                                style={styles.field}
+                                placeholder=' Agregá un comentario!'
+                                keyboardType='default'
+                                //poner propiedad para transformarlo en textArea
+                                onChangeText={text => this.setState({ comments: text })}
+                                value={this.state.comments}
                             />
-                        </>
+                            <TouchableOpacity onPress={() => this.enviarComment(this.state.comments)}>
+                                <Text>Comentar</Text>
+                            </TouchableOpacity>
 
-                }
-                <View style={styles.container}>
-
-                    <TextInput
-                        style={styles.field}
-                        placeholder=' Agregá un comentario!'
-                        keyboardType='default'
-                        //poner propiedad para transformarlo en textArea
-                        onChangeText={text => this.setState({ comments: text })}
-                        value={this.state.comments}
-                    />
-                    <TouchableOpacity onPress={() => this.enviarComment(this.state.comments)}>
-                        <Text>Comentar</Text>
-                    </TouchableOpacity>
-                </View>
+                        </View>
+                    </>}
             </>
 
         )
@@ -97,8 +104,8 @@ const styles = StyleSheet.create({
     },
     negrita: {
         fontWeight: 'bold',
-        
-      }
+
+    }
 });
 
 

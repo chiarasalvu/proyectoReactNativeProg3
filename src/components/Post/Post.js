@@ -56,7 +56,7 @@ class Post extends Component {
 
             <View style={styles.container}>
                 {this.props.postData.owner == auth.currentUser.email ?
-                    <Text style={styles.contexto} onPress={() => this.props.navigation.navigate('Profile')} ><Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
+                    <Text style={styles.contexto} onPress={() => this.props.navigation.navigate('Profile', {id: this.props.id})} ><Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
                     :
                     <Text style={styles.contexto} onPress={() => this.props.navigation.navigate('Users', { email: this.props.postData.owner })} > <Ionicons name="person-outline" size={20} color="black" /> {this.props.postData.owner}</Text>
 
