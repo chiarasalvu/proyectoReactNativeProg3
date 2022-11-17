@@ -8,7 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 class Post extends Component {
-
     constructor(props) {
         super(props)
         this.state = {

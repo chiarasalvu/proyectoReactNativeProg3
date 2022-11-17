@@ -127,5 +127,5 @@ const styles = StyleSheet.create({
 
 });
 
-export default Users
+export default Users;
 

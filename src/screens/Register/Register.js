@@ -14,8 +14,7 @@ class Register extends Component {
             miniBio: '',
             profilePhoto: '',
             errors: '',
-            showCamara: true,
-            mostrar: false,
+            showCamara: false,
         }
     }
 
@@ -43,10 +42,10 @@ class Register extends Component {
                 .then(res => {
 
                     db.collection('users').add({
-                        email: email,
-                        userName: userName,
-                        miniBio: miniBio,
-                        profilePhoto: profilePhoto,
+                        email,
+                        userName,
+                        miniBio,
+                        profilePhoto,
                         createdAt: Date.now()
                     })
                         .then(() => {
@@ -57,7 +56,7 @@ class Register extends Component {
                                 miniBio: '',
                                 profilePhoto: '',
                                 errors: '',
-                                showCamara: true,
+                                showCamara: false,
                             })
 
                             this.props.navigation.navigate('Login')
@@ -72,21 +71,15 @@ class Register extends Component {
         this.setState({
             profilePhoto: url,
             showCamara: false,
-            activarError: false
         })
     }
 
-    mostrarCamera() {
-        this.setState({
-            mostrar: true
-        })
-    }
 
     render() {
         return (
             <View style={styles.container}>
 
-                {this.state.activarError ?
+                {this.state.errors ?
                     <Text style={styles.error}> {this.state.errors}</Text> :
                     ""
                 }
@@ -121,23 +114,25 @@ class Register extends Component {
                         onChangeText={text => this.setState({ miniBio: text })}
                         value={this.state.miniBio}
                     />
-                    <TouchableOpacity style={styles.field} onPress={() => this.mostrarCamera()}>
-                        <Text style={styles.letra}> Tocá para sacar foto de perfil </Text>
-                    </TouchableOpacity>
 
                     {
-                        this.state.mostrar ?
+                        this.state.showCamara ?
 
-                            <MyCamera onImageUpload={url => this.onImageUpload(url)} />
+                            <View>
+                                <MyCamera onImageUpload={url => this.onImageUpload(url)} />
+                            </View>
+
                             :
-                            ''
+
+                            <TouchableOpacity style={styles.field} onPress={() => this.setState({ showCamara: true })}>
+                                <Text style={styles.letra}> Tocá para sacarte una foto de perfil </Text> 
+                            </TouchableOpacity>
                     }
 
 
 
-
                     {(this.state.email, this.state.password, this.state.userName) == '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) && this.setState({ activarError: true })}>
+                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) }>
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
@@ -189,8 +184,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#E8F0FE',
     },
     letra: {
-        color: "white",
-        fontWeight: 'bold'
+        color: "black",
+        
     },
     negrita: {
         fontWeight: 'bold',

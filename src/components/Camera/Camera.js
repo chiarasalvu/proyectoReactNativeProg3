@@ -34,7 +34,7 @@ class MyCamera extends Component {
                     showCamera: false
                 })
             })
-            .catch(e => console.log(e))
+            .catch(error => console.log(error))
     }
 
     cancelarFoto() {

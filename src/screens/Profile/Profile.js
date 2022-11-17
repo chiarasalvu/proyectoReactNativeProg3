@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndi
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 import { AntDesign } from '@expo/vector-icons';
+import MyCamera from '../../components/Camera/Camera';
 
 
 class Profile extends Component {
@@ -12,7 +13,9 @@ class Profile extends Component {
       users: [],
       posts: [],
       usuarioLogueado: auth.currentUser.email,
-      loading: false, 
+      loading: false,
+      profilePhoto: '',
+      showCamara: false,
 
 
     }
@@ -87,6 +90,27 @@ class Profile extends Component {
       .catch(e => console.log(e))
   }
 
+
+  onImageUpload(url) {
+    this.setState({
+      profilePhoto: url,
+      showCamara: false,
+    })
+  }
+
+
+  updatePhoto() {
+    db.collection('users')
+      .doc(this.state.user.id)
+      .update({
+        profilePhoto
+      })
+      .catch(e => console.log(e))
+  }
+
+
+
+
   render() {
     return (
 
@@ -94,28 +118,58 @@ class Profile extends Component {
 
         {this.state.loading ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
           <>
-          <View style={styles.tamañoFlatlist}>
-            <FlatList
-              style={styles.flatList}
-              data={this.state.users}
-              keyExtractor={oneUser => oneUser.id.toString()}
-              renderItem={({ item }) => <>
-                <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
-                <Text style={styles.contexto} >Email del Usuario: {item.data.email}</Text>
-                <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
-                <Image
-                  style={styles.photo}
-                  source={{ uri: item.data.profilePhoto }}
-                  resizeMode='cover'
-                />
-                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
-              </>
+            <View style={styles.tamañoFlatlist}>
+              <FlatList
+                style={styles.flatList}
+                data={this.state.users}
+                keyExtractor={oneUser => oneUser.id.toString()}
+                renderItem={({ item }) => <>
+                  <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
+                  <Text style={styles.contexto} >Email del Usuario{item.data.email}</Text>
+                  <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
+                  {
+                    this.state.showCamara ?
 
-              }
-            />
+                      <View>
+                        <MyCamera onImageUpload={url => this.onImageUpload(url)} />
+                      </View>
+
+                      :
+
+                      <>
+                        <TouchableOpacity style={styles.field} onPress={() => this.setState({ showCamara: true })}>
+                          <Text style={styles.letra}> Tocá para sacarte una foto de perfil </Text>
+                        </TouchableOpacity>
+
+                        {
+                          this.state.showCamara == false ?
+                            '' :
+                            <TouchableOpacity style={styles.field} onPress={() => this.updatePhoto()}>
+                              <Text style={styles.letra}> Confirmar </Text>
+                            </TouchableOpacity>
+                        }
+                      </>
+
+
+
+
+
+
+                  }
+                  <Image
+                    style={styles.photo}
+                    source={{ uri: item.data.profilePhoto }}
+                    resizeMode='cover'
+                  />
+
+                  <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+                </>
+
+                }
+              />
             </View>
 
-            
+
             <FlatList
               data={this.state.posts}
               keyExtractor={onePosts => onePosts.id.toString()}
