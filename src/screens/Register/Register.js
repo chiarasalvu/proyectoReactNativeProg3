@@ -79,7 +79,7 @@ class Register extends Component {
         return (
             <View style={styles.container}>
 
-                {this.state.activarError ?
+                {this.state.errors ?
                     <Text style={styles.error}> {this.state.errors}</Text> :
                     ""
                 }
@@ -132,7 +132,7 @@ class Register extends Component {
 
 
                     {(this.state.email, this.state.password, this.state.userName) == '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) && this.setState({ activarError: true })}>
+                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) }>
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
