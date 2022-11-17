@@ -18,8 +18,8 @@ function App() {
         <Stack.Screen name="Login" component={ Login } />
         <Stack.Screen name="HomeMenu" component={ HomeMenu } options= {{headerShown: false}} />
         <Stack.Screen name="Users" component={ Users } />
-        <Stack.Screen name="Comments" component={ Comments } />
         <Stack.Screen name="Profile" component={ Profile } />
+        <Stack.Screen name="Comments" component={ Comments } />
      </Stack.Navigator>
    </NavigationContainer>
   );
