@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndi
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 import { AntDesign } from '@expo/vector-icons';
-import firebase from "firebase";
 
 
 class Profile extends Component {
@@ -13,7 +12,6 @@ class Profile extends Component {
       users: [],
       posts: [],
       usuarioLogueado: auth.currentUser.email,
-      // loading: true,
       loading: false, 
 
 
@@ -78,7 +76,7 @@ class Profile extends Component {
 
   eliminarPerfil() {
 
-    db.collection("users").doc(this.props.id).delete()
+    db.collection("users").doc(this.state.users.id).delete()
       .then(() => {
         auth.currentUser.delete()
       })
@@ -103,7 +101,7 @@ class Profile extends Component {
               keyExtractor={oneUser => oneUser.id.toString()}
               renderItem={({ item }) => <>
                 <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
-                <Text style={styles.contexto} >Email del Usuario{item.data.email}</Text>
+                <Text style={styles.contexto} >Email del Usuario: {item.data.email}</Text>
                 <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
                 <Image
                   style={styles.photo}
@@ -123,7 +121,7 @@ class Profile extends Component {
               keyExtractor={onePosts => onePosts.id.toString()}
               renderItem={({ item }) => <>
 
-                <Post postData={item.data} id={item.id} />
+                <Post  {...this.props} postData={item.data} id={item.id} />
                 <Text style={styles.contexto} >{item.data.textoPost}</Text>
 
                 <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>

@@ -84,7 +84,7 @@ class Users extends Component {
               renderItem={({ item }) => <>
 
                 <Text> Cantidad de posteos: {this.state.posts.length}</Text>
-                <Post postData={item.data} id={item.id} />
+                <Post {...this.props} postData={item.data} id={item.id} />
                 <Text>{item.data.textoPost}</Text>
 
 
