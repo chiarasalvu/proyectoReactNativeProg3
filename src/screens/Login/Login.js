@@ -62,7 +62,7 @@ class Login extends Component {
                         </TouchableOpacity>
                     }
 
-                    <Text style={styles.negrita} onPress={() => this.props.navigation.navigate('Register')} >Ir a Registro</Text>
+                    <Text style={styles.negrita} onPress={() => this.props.navigation.navigate('Register')} > ¿No tenes cuenta? Registrate</Text>
                 </View>
             </View>
         )

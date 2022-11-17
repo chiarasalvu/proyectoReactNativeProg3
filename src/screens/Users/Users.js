@@ -55,28 +55,28 @@ class Users extends Component {
     return (
 
       <View style={styles.container}>
-        <Text>Perfil</Text>
 
         {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
           <>
-            <FlatList
-              data={this.state.users}
-              keyExtractor={oneUser => oneUser.id.toString()}
-              renderItem={({ item }) => <>
-                <Text style={styles.contexto}>{item.data.userName}</Text>
-                <Text style={styles.contexto}>{item.data.email}</Text>
-                <Text style={styles.contexto}>{item.data.miniBio}</Text>
-                <Image
-                  style={styles.photo}
-                  source={{ uri: item.data.profilePhoto }}
-                  resizeMode='cover'
-                />
-              </>
-
-              }
-            />
-
-            <Text style={styles.negrita}> Posteos </Text>
+            <View style={styles.tamañoFlatlist}>
+              <FlatList
+                data={this.state.users}
+                style={styles.flatList}
+                keyExtractor={oneUser => oneUser.id.toString()}
+                renderItem={({ item }) => <>
+                  <Text style={styles.contexto}>{item.data.userName}</Text>
+                  <Text style={styles.contexto}>{item.data.email}</Text>
+                  <Text style={styles.contexto}>{item.data.miniBio}</Text>
+                  <Image
+                    style={styles.photo}
+                    source={{ uri: item.data.profilePhoto }}
+                    resizeMode='cover'
+                  />
+                  <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+                </>
+                }
+              />
+            </View>
 
             <FlatList
               data={this.state.posts}
@@ -116,6 +116,14 @@ const styles = StyleSheet.create({
     padding: 7,
     marginBottom: 10,
   },
+  flatList: {
+    borderWidth: 2,
+    borderColor: 'black',
+
+  },
+  tamañoFlatlist: {
+    height: '20%'
+  }
 
 });
 

@@ -15,7 +15,7 @@ class Register extends Component {
             profilePhoto: '',
             errors: '',
             showCamara: true,
-            mostrar: false
+            mostrar: false,
         }
     }
 
@@ -30,10 +30,10 @@ class Register extends Component {
 
     registerUser(email, password, userName, miniBio, profilePhoto) {
 
-        if (this.state.email === '') {
+        if (this.state.email == '') {
 
             this.setState({ errors: 'El campo de email esta vacío' })
-        } else if (this.state.password === '') {
+        } else if (this.state.password == '') {
             this.setState({ errors: 'El campo de contraseña esta vacío' })
         } else if (this.state.userName === '') {
             this.setState({ errors: 'El campo de nombre de usuario esta vacío' })
@@ -64,9 +64,7 @@ class Register extends Component {
                         })
 
                 })
-                .catch(error => {
-                    console.log(error)
-                })
+                .catch(error => { console.log(error) })
         }
     }
 
@@ -74,6 +72,7 @@ class Register extends Component {
         this.setState({
             profilePhoto: url,
             showCamara: false,
+            activarError: false
         })
     }
 
@@ -83,14 +82,14 @@ class Register extends Component {
         })
     }
 
-    error(){
-        alert(this.state.errors)
-    }
-
     render() {
         return (
             <View style={styles.container}>
-            
+
+                {this.state.activarError ?
+                    <Text style={styles.error}> {this.state.errors}</Text> :
+                    ""
+                }
                 <View style={styles.container}>
                     <Ionicons name="person-outline" size={50} color="black" />
                     <TextInput
@@ -131,14 +130,14 @@ class Register extends Component {
 
                             <MyCamera onImageUpload={url => this.onImageUpload(url)} />
                             :
-                           ''
+                            ''
                     }
 
 
 
 
-                    {(this.state.email, this.state.password, this.state.userName) === '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.errors() }>  
+                    {(this.state.email, this.state.password, this.state.userName) == '' ?
+                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) && this.setState({ activarError: true })}>
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
@@ -152,7 +151,7 @@ class Register extends Component {
                     <Text style={styles.negrita} onPress={() => this.props.navigation.navigate('Login')} >Ir a login</Text>
 
                 </View>
-                
+
             </View>
         )
     }

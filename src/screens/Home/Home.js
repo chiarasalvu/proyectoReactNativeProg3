@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image } from 'react-native';
 import { db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
@@ -15,7 +15,7 @@ class Home extends Component {
 
   componentDidMount() {
     db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
-      docs => { 
+      docs => {
         let posts = []; //si el array esta vacio podriamos poner que no hay resultados de busqueda
         docs.forEach(doc => {
           posts.push({
@@ -29,23 +29,27 @@ class Home extends Component {
 
         })
       }
-      
-      )
+
+    )
 
   }
 
   render() {
     return (
-      
-      <View style ={styles.container}>
-        {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
-        <FlatList
-          data={this.state.posts}
-          keyExtractor={onePosts => onePosts.id.toString()}
-          renderItem={({ item }) => <Post {...this.props} postData={item.data} id={item.id}/>} //Estamos destructurando todas las props que tiene el componente padre y pasandoselas al componente hijo
-          
+
+      <View style={styles.container}>
+        
+        {this.state.loading ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
+          <>
+          <Text style={styles.encabezado}>KONFET</Text>
+          <FlatList
+            data={this.state.posts}
+            keyExtractor={onePosts => onePosts.id.toString()}
+            renderItem={({ item }) => <Post {...this.props} postData={item.data} id={item.id} />} //Estamos destructurando todas las props que tiene el componente padre y pasandoselas al componente hijo
+
           /* Avalado por Facu */
-        />}
+          />
+          </>}
       </View>
     )
   }
@@ -56,6 +60,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
+
+  },
+  encabezado: {
+    fontSize: 40,
+    fontFamily: 'Rubik Distressed, cursive',
+    textAlign: 'center',
+    fontWeight: 'bold'
+    
   }
 });
 

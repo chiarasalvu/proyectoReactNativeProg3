@@ -7,15 +7,16 @@ import firebase from "firebase";
 
 
 class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
       posts: [],
       usuarioLogueado: auth.currentUser.email,
       // loading: true,
-      loading: false
-      
+      loading: false, 
+
+
     }
   }
 
@@ -29,11 +30,10 @@ class Profile extends Component {
             data: doc.data()
           })
           this.setState({
-            users: users ,
-            // loading: false,
-            
-          },
-          ()=> console.log(this.state.users) )
+            users: users,
+            loading: false,
+
+          })
 
         })
       }
@@ -49,10 +49,9 @@ class Profile extends Component {
           })
           this.setState({
             posts,
-            // loading: false
-          },
-          ()=> console.log(this.state.posts) )
-          
+            loading: false
+          })
+
 
         })
       }
@@ -78,14 +77,14 @@ class Profile extends Component {
 
 
   eliminarPerfil() {
-      
-      db.collection("users").doc(this.state.users.id).delete()
-      .then(()=> {
-          auth.currentUser.delete()
+
+    db.collection("users").doc(this.props.id).delete()
+      .then(() => {
+        auth.currentUser.delete()
       })
-      .then(()=> {
-          this.props.navigation.navigate('Register')
-      
+      .then(() => {
+        this.props.navigation.navigate('Register')
+
       })
       .catch(e => console.log(e))
   }
@@ -95,33 +94,35 @@ class Profile extends Component {
 
       <View style={styles.container}>
 
-        {this.state.loading  ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
+        {this.state.loading ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
           <>
+          <View style={styles.tamañoFlatlist}>
             <FlatList
               style={styles.flatList}
               data={this.state.users}
               keyExtractor={oneUser => oneUser.id.toString()}
               renderItem={({ item }) => <>
-                <Text style={styles.contexto} >{item.data.userName}</Text>
-                <Text style={styles.contexto} >{item.data.email}</Text>
-                <Text style={styles.contexto} >{item.data.miniBio}</Text>
+                <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
+                <Text style={styles.contexto} >Email del Usuario{item.data.email}</Text>
+                <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
                 <Image
                   style={styles.photo}
                   source={{ uri: item.data.profilePhoto }}
                   resizeMode='cover'
                 />
+                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
               </>
 
               }
             />
+            </View>
 
-
-
+            
             <FlatList
               data={this.state.posts}
               keyExtractor={onePosts => onePosts.id.toString()}
               renderItem={({ item }) => <>
-                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+
                 <Post postData={item.data} id={item.id} />
                 <Text style={styles.contexto} >{item.data.textoPost}</Text>
 
@@ -138,7 +139,7 @@ class Profile extends Component {
               <Text style={styles.contexto}> <AntDesign name="deleteuser" size={20} color="black" />   Eliminar Perfil</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.logout()}>
+            <TouchableOpacity onPress={() => this.logout()} >
               <Text style={styles.contexto}> <AntDesign name="logout" size={20} color="black" />   Cerrar sesión</Text>
             </TouchableOpacity>
 
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+
   },
   clickeable: {
     padding: 4,
@@ -166,9 +168,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: 7,
     marginBottom: 10,
+
   },
   flatList: {
-    //ayuda
+    borderWidth: 2,
+    borderColor: 'black',
+  },
+  tamañoFlatlist: {
+    height: '20%'
   }
 });
 

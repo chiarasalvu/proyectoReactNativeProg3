@@ -53,14 +53,14 @@ class Comments extends Component {
                     <>
                         {
                             this.state.post.comments?.length === 0 ?
-                                <Text> Aún no hay comentarios</Text>
+                                <Text style={styles.noComments}> Aún no hay comentarios</Text>
                                 :
                                 <>
                                     <FlatList
                                         data={this.state.post.comments}
                                         keyExtractor={oneComment => oneComment.createdAt.toString()}
-                                        renderItem={({ item }) => <><Text style={styles.negrita}> {item.owner}: </Text> <Text>
-                                            {item.comments}</Text>  </>}
+                                        renderItem={({ item }) => <><Text style={styles.negrita}> {item.owner}: {item.comments}</Text> 
+                                             </>}
                                     //falta poner el nombre del usuario que hizo el comentario
                                     />
                                 </>
@@ -101,6 +101,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    
+    noComments: {
+        textAlign : 'center',
+        padding: 7,
+        backgroundColor:'#fff',
+        fontSize: 20
     },
     negrita: {
         fontWeight: 'bold',

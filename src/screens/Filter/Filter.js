@@ -4,8 +4,8 @@ import { auth, db } from '../../firebase/config'
 import { MaterialIcons } from '@expo/vector-icons';
 
 class Filter extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             users: [],
             filteredUsers: [],
@@ -46,13 +46,13 @@ class Filter extends Component {
 
     render() {
         return (
-            
+
             <View style={styles.container}>
                 <MaterialIcons name="person-search" size={40} color="black" />
-                {this.state.loading ? <ActivityIndicator size='large' color='green'></ActivityIndicator> :
+                {this.state.loading ? <ActivityIndicator size='large' color='blue'></ActivityIndicator> :
                     <>
-                        <TextInput 
-                        style={styles.field}
+                        <TextInput
+                            style={styles.field}
                             placeholder='Búsqueda de usuarios'
                             keyboardType='default'
                             onChangeText={text => this.controlarCambios(text)}
@@ -67,11 +67,12 @@ class Filter extends Component {
                                 this.state.filteredUsers.length === 0 ?
                                     <>No se encontraron resultados</>
                                     :
-                                    <FlatList 
+                                    <FlatList
                                         data={this.state.filteredUsers}
                                         keyExtractor={oneUser => oneUser.id.toString()}
-                                        renderItem={({ item }) => <Text>{item.data.userName}</Text>} //navigate
-                                    />
+                                        renderItem={({ item }) => <Text onPress={() => this.props.navigation.navigate('Users', { email: item.data.email })}>{item.data.userName}</Text>
+                        
+                        }/>
                         }
                     </>}
             </View>

@@ -52,6 +52,7 @@ class Post extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
 
             <View style={styles.container}>
@@ -66,21 +67,23 @@ class Post extends Component {
                     source={{ uri: this.props.postData.photo }}
                     resizeMode='cover'
                 />
+                <View style={styles.container}>
                 {
                     this.state.miLike === false ?
 
-                        <TouchableOpacity style={styles.contexto} onPress={() => this.like()}>
+                        <TouchableOpacity style={styles.botones} onPress={() => this.like()}>
                             <AntDesign name="hearto" size={20} color="black" />
                         </TouchableOpacity> :
 
-                        <TouchableOpacity style={styles.contexto} onPress={() => this.unlike()}>
+                        <TouchableOpacity style={styles.botones} onPress={() => this.unlike()}>
                             <AntDesign name="heart" size={20} color="red" />
                         </TouchableOpacity>
 
                 }
-                <TouchableOpacity style={styles.contexto} onPress={() => this.props.navigation.navigate('Comments', { id: this.props.id })}>
+                <TouchableOpacity style={styles.botones} onPress={() => this.props.navigation.navigate('Comments', { id: this.props.id })}>
                     <FontAwesome name="comment-o" size={24} color="black" />
                 </TouchableOpacity>
+                </View>
                 <Text style={styles.contexto}>Likes: {this.state.cantidadDeLikes} </Text>
 
                 <Text style={styles.contexto}>Comentarios: {this.props.postData.comments.length} </Text>
@@ -100,19 +103,35 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        width : '100%'
+        width : '100%',
+        
+        
     },
     contexto: {
         alignItems : 'flex-start',
         padding: 7,
         marginBottom: 10,
+        
+    },
+    botones: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems : 'flex-start',
+        padding: 7,
+        marginBottom: 10,
+        width: '40%',
+        
+        
     },
     negrita: {
         fontWeight: 'bold',
     },
     photo: {
         height: 350,
-        alignItems : 'center'
+        alignItems : 'center',
+        borderWidth: 2,
+        borderColor: 'black',
+        
     }
 });
 
