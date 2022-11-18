@@ -11,7 +11,8 @@ class MyCamera extends Component {
         this.state = {
             permissions: false,
             showCamera: true,
-            temporaryURL: ''
+            temporaryURL: '',
+            confirmPhoto: ''
         }
 
         this.metodosDeCamara = ''
@@ -61,6 +62,9 @@ class MyCamera extends Component {
                     .then(() => {
                         refStorage.getDownloadURL() //url publica de firebase
                             .then(url => this.props.onImageUpload(url))
+                            .then( this.setState({
+                                confirmPhoto: 'La foto fue exitosa!'
+                            }) )
                     })
             })
             .catch(error => console.log(error))
@@ -97,6 +101,9 @@ class MyCamera extends Component {
                                 <TouchableOpacity onPress={() => this.guardarFoto()} >
                                     <MaterialIcons name="arrow-forward" size={30} color="green" />
                                 </TouchableOpacity>
+
+                                <Text> { this.state.confirmPhoto} </Text>
+
                             </View>
                         :
                         <Text>No tengo permisos</Text>

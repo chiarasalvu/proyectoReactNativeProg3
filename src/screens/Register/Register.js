@@ -115,24 +115,28 @@ class Register extends Component {
                         value={this.state.miniBio}
                     />
 
-                    {
-                        this.state.showCamara ?
 
-                            <View>
+                    {
+                        
+                            this.state.showCamara ?
+
+                            <View style={styles.container2}>
                                 <MyCamera onImageUpload={url => this.onImageUpload(url)} />
                             </View>
 
                             :
 
                             <TouchableOpacity style={styles.field} onPress={() => this.setState({ showCamara: true })}>
-                                <Text style={styles.letra}> Tocá para sacarte una foto de perfil </Text> 
+                                <Text style={styles.letra}> Tocá para sacarte una foto de perfil </Text>
                             </TouchableOpacity>
+
                     }
 
 
 
+
                     {(this.state.email, this.state.password, this.state.userName) == '' ?
-                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto) }>
+                        <TouchableOpacity style={styles.botonDesactivado} onPress={() => this.registerUser(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.profilePhoto)}>
                             <Text style={styles.letra}>Registrarme</Text>
                         </TouchableOpacity>
                         :
@@ -165,6 +169,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+
+    },
+
+    container2: {
+        backgroundColor: '#fff',
+        height: 350,
+        width: 250,
+        justifyContent: 'center',
+
     },
     boton: {
         height: 40,
@@ -185,7 +198,7 @@ const styles = StyleSheet.create({
     },
     letra: {
         color: "black",
-        
+
     },
     negrita: {
         fontWeight: 'bold',

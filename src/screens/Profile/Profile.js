@@ -16,9 +16,7 @@ class Profile extends Component {
       // loading: true,
       loading: false,
       profilePhoto: '',
-      showCamara: false,
-
-
+      
     }
   }
 
@@ -92,24 +90,6 @@ class Profile extends Component {
   }
 
 
-  onImageUpload(url) {
-    this.setState({
-      profilePhoto: url,
-      showCamara: false,
-    })
-  }
-
-
-  updatePhoto() {
-    db.collection('users')
-      .doc(this.state.user.id)
-      .update({
-        profilePhoto
-      })
-      .catch(e => console.log(e))
-  }
-
-
 
 
   render() {
@@ -125,45 +105,19 @@ class Profile extends Component {
                 data={this.state.users}
                 keyExtractor={oneUser => oneUser.id.toString()}
                 renderItem={({ item }) => <>
-                  <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
-                  <Text style={styles.contexto} >Email del Usuario{item.data.email}</Text>
-                  <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
-                  {
-                    this.state.showCamara ?
-
-                      <View>
-                        <MyCamera onImageUpload={url => this.onImageUpload(url)} />
-                      </View>
-
-                      :
-
-                      <>
-                        <TouchableOpacity style={styles.field} onPress={() => this.setState({ showCamara: true })}>
-                          <Text style={styles.letra}> Tocá para sacarte una foto de perfil </Text>
-                        </TouchableOpacity>
-
-                        {
-                          this.state.showCamara == false ?
-                            '' :
-                            <TouchableOpacity style={styles.field} onPress={() => this.updatePhoto()}>
-                              <Text style={styles.letra}> Confirmar </Text>
-                            </TouchableOpacity>
-                        }
-                      </>
-
-
-
-
-
-
-                  }
-                  <Image
+                <Image
                     style={styles.photo}
                     source={{ uri: item.data.profilePhoto }}
                     resizeMode='cover'
                   />
-
+                  <Text style={styles.contexto} >Usuario: {item.data.userName}</Text>
+                  <Text style={styles.contexto} >Email del Usuario: {item.data.email}</Text>
+                  <Text style={styles.contexto} >Descripción: {item.data.miniBio}</Text>
                   <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+          
+                  
+
+                  
                 </>
 
                 }
@@ -228,7 +182,19 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   tamañoFlatlist: {
-    height: '20%'
+    height: '32%',
+    
+  },
+
+  photo: { 
+  backgroundColor: '#fff',
+  height: 80,
+  width: 80,
+  borderRadius: 50,
+  justifyContent: 'center',
+  alignSelf: 'center',
+  marginTop: 10,
+
   }
 });
 
