@@ -82,7 +82,9 @@ class Users extends Component {
               data={this.state.posts}
               keyExtractor={onePosts => onePosts.id.toString()}
               renderItem={({ item }) => <>
-                <Post postData={item.data} id={item.id} />
+
+                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
+                <Post {...this.props} postData={item.data} id={item.id} />
                 <Text>{item.data.textoPost}</Text>
 
 

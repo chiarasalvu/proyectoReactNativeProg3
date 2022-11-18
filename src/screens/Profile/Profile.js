@@ -13,7 +13,6 @@ class Profile extends Component {
       users: [],
       posts: [],
       usuarioLogueado: auth.currentUser.email,
-      // loading: true,
       loading: false,
       profilePhoto: '',
       
@@ -78,7 +77,7 @@ class Profile extends Component {
 
   eliminarPerfil() {
 
-    db.collection("users").doc(this.props.id).delete()
+    db.collection("users").doc(this.state.users.id).delete()
       .then(() => {
         auth.currentUser.delete()
       })
@@ -130,7 +129,7 @@ class Profile extends Component {
               keyExtractor={onePosts => onePosts.id.toString()}
               renderItem={({ item }) => <>
 
-                <Post postData={item.data} id={item.id} />
+                <Post  {...this.props} postData={item.data} id={item.id} />
                 <Text style={styles.contexto} >{item.data.textoPost}</Text>
 
                 <TouchableOpacity onPress={() => this.borrarFoto(item.id)}>
