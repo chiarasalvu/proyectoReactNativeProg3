@@ -61,7 +61,6 @@ class Comments extends Component {
                                         keyExtractor={oneComment => oneComment.createdAt.toString()}
                                         renderItem={({ item }) => <><Text style={styles.negrita}> {item.owner}: {item.comments}</Text> 
                                              </>}
-                                    //falta poner el nombre del usuario que hizo el comentario
                                     />
                                 </>
 

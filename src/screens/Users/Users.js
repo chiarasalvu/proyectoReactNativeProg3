@@ -64,14 +64,14 @@ class Users extends Component {
                 style={styles.flatList}
                 keyExtractor={oneUser => oneUser.id.toString()}
                 renderItem={({ item }) => <>
-                  <Text style={styles.contexto}>{item.data.userName}</Text>
-                  <Text style={styles.contexto}>{item.data.email}</Text>
-                  <Text style={styles.contexto}>{item.data.miniBio}</Text>
-                  <Image
+                 <Image
                     style={styles.photo}
                     source={{ uri: item.data.profilePhoto }}
                     resizeMode='cover'
                   />
+                  <Text style={styles.contexto}>{item.data.userName}</Text>
+                  <Text style={styles.contexto}>{item.data.email}</Text>
+                  <Text style={styles.contexto}>{item.data.miniBio}</Text>
                   <Text> Cantidad de posteos: {this.state.posts.length}</Text>
                 </>
                 }
@@ -82,8 +82,6 @@ class Users extends Component {
               data={this.state.posts}
               keyExtractor={onePosts => onePosts.id.toString()}
               renderItem={({ item }) => <>
-
-                <Text> Cantidad de posteos: {this.state.posts.length}</Text>
                 <Post {...this.props} postData={item.data} id={item.id} />
                 <Text>{item.data.textoPost}</Text>
 
@@ -123,7 +121,16 @@ const styles = StyleSheet.create({
   },
   tamañoFlatlist: {
     height: '20%'
-  }
+  },
+  photo: { 
+    backgroundColor: '#fff',
+    height: 80,
+    width: 80,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 10
+  }  
 
 });
 
